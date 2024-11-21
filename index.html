@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <body>
+    <h1>Jokebook</h1>
+    <p>Wybierz kategorię, aby otrzymać losowy żart:</p>
+
+    <!-- Lista przycisków -->
+    <button onclick="getJoke('funnyJoke')">Funny Joke</button>
+    <button onclick="getJoke('lameJoke')">Lame Joke</button>
+
+    <hr />
+
+    <!-- Miejsce na wynik -->
+    <h2>Żart:</h2>
+    <p id="joke"></p>
+    <p id="response"></p>
+
+    <script>
+      async function getJoke(category) {
+        const response = await fetch(
+          `http://localhost:3000/jokebook/joke/${category}`
+        );
+        const joke = await response.json();
+        document.getElementById("joke").innerText = joke.joke;
+        document.getElementById("response").innerText = joke.response;
+      }
+    </script>
+  </body>
+</html>

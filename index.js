@@ -44,6 +44,41 @@ app.get("/math/rectangle/:a/:b", (req, res) => {
 });
 
 //TODO3
+app.get("/math/power/:base/:exponent", (req, res) => {
+  const base = parseFloat(req.params.base);
+  const exponent = parseFloat(req.params.exponent);
+  const root = req.query.root === "true";
+
+  if (isNaN(base)) {
+    return res.status(400).send({ error: "Base musi być liczbą." });
+  }
+
+  const powerResult = Math.pow(base, exponent).toFixed(2);
+  if (root) {
+    // Jeśli root = true, oblicz również pierwiastek kwadratowy
+    if (base < 0) {
+      return res.status(400).send({
+        error:
+          "Pierwiastek kwadratowy nie jest zdefiniowany dla liczb ujemnych.",
+      });
+    }
+
+    const sqrtResult = Math.sqrt(base).toFixed(2); // Oblicz pierwiastek kwadratowy
+    return res.send({
+      base: base,
+      exponent: exponent,
+      powerResult: powerResult,
+      sqrtResult: sqrtResult,
+    });
+  }
+
+  // Jeśli root = false, zwróć tylko wynik potęgowania
+  res.send({
+    base: base,
+    exponent: exponent,
+    powerResult: powerResult,
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -24,6 +24,24 @@ app.get("/math/circle/:r", (req, res) => {
 });
 
 //TODO2
+app.get("/math/rectangle/:a/:b", (req, res) => {
+  const a = parseFloat(req.params.a);
+  const b = parseFloat(req.params.b);
+
+  if (a <= 0 || b <= 0) {
+    return res
+      .status(400)
+      .send({ error: "Proszę podać poprawne wymiary (liczby większe od 0)." });
+  }
+
+  const area = a * b;
+  const perimeter = 2 * a + 2 * b;
+
+  res.send({
+    area: area,
+    perimeter: perimeter,
+  });
+});
 
 //TODO3
 
